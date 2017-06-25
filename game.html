@@ -1,0 +1,49 @@
+<style>
+    #game {
+        border: 1px solid black;
+        outline: none;
+    }
+    assets {
+        display: none;
+    }
+    #main-container {
+        width:720px;
+    }
+    textcontent p {
+        width:720px;
+    }
+    .center {
+        text-align: center;
+    }
+    .padded-bottom {
+        margin-bottom: 3cm;
+    }
+</style>
+
+<assets></assets>
+
+<div id="main-container">
+    <canvas id="game" width="720" height="680" tabindex="1"></canvas>
+</div>
+
+<script src="js/Coordinate.js"></script>
+<script src="js/Size.js"></script>
+<script src="js/Events.js"></script>
+<script src="js/InputHandler.js"></script>
+<script src="js/DrawTimer.js"></script>
+<script src="js/Board.js"></script>
+<script src="js/Controller.js"></script>
+<script src="js/Canvas.js"></script>
+<script src="js/Button.js"></script>
+<script src="js/Home.js"></script>
+<script src="js/SpyMaster.js"></script>
+
+<script>
+    const FPS = 60;
+
+    const canvas = new Canvas("game");
+    const controller = new Controller();
+    const inputHandler = new InputHandler(canvas);
+
+    (new DrawTimer(canvas, FPS)).start();
+</script>
