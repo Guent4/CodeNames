@@ -88,7 +88,8 @@ class Board {
                 wordList.push(randomWord);
                 
                 // Generate card
-                this._cards.push(new Card(this._canvas, new Coordinate(...coord.toArray()), this._cardSize, randomWord));
+                let card = new Card(this._canvas, new Coordinate(...coord.toArray()), this._cardSize, randomWord)
+                this._cards.push(card);
                 coord.x += this._cardSize.width + this._cardSpacing.x;
             }
             coord.x = this._cardBoxTopLeftCoord.x;

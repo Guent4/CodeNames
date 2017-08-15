@@ -99,7 +99,7 @@ Controller.SpyMasterState = class extends Controller.State {
 
     start() {
         console.log("Starting SpyMaster State");
-        const type = (this._type === Controller.SpyMasterState.TYPE.RED) ? SpyMaster.TYPE.RED : SpyMaster.TYPE.BLUE;
+        const type = (this._type === Controller.SpyMasterState.TYPE.RED) ? Playing.TYPE.RED : Playing.TYPE.BLUE;
         this._spyMaster = new SpyMaster(canvas, this._controller.board, type);
     }
 
@@ -112,8 +112,8 @@ Controller.SpyMasterState = class extends Controller.State {
     
     _gotoTransition() {
         const goto = (this._type === Controller.SpyMasterState.TYPE.RED) ?
-            Controller.TransitionState.TYPE.GOTO_BLUE_GUESSER : 
-            Controller.TransitionState.TYPE.GOTO_RED_GUESSER;
+            Controller.TransitionState.TYPE.GOTO_RED_GUESSER : 
+            Controller.TransitionState.TYPE.GOTO_BLUE_GUESSER;
         
         this._controller.state = new Controller.TransitionState(goto);
     }
@@ -138,21 +138,21 @@ Controller.GuesserState = class extends Controller.State {
 
     start() {
         console.log("Starting Guesser State");
-        // const type = (this._type === Controller.GuesserState.TYPE.RED) ? Gusser.TYPE.RED : SpyMaster.TYPE.BLUE;
-        // this._spyMaster = new SpyMaster(canvas, this._controller.board, type);
+        const type = (this._type === Controller.GuesserState.TYPE.RED) ? Playing.TYPE.RED : Playing.TYPE.BLUE;
+        this._guesser = new Guesser(canvas, this._controller.board, type);
     }
 
     finish() {
         console.log("Finishing Guesser State");
-        // this._spyMaster.remove();
+        this._guesser.remove();
         
         Events.off(Controller.GuesserState.EVENTS.GOTO_TRANSITION, this);
     }
     
     _gotoTransition() {
-        const goto = (this._type === Controller.GueserState.TYPE.RED) ?
-            Controller.TransitionState.TYPE.GOTO_BLUE_GUESSER : 
-            Controller.TransitionState.TYPE.GOTO_RED_GUESSER;
+        const goto = (this._type === Controller.GuesserState.TYPE.RED) ?
+            Controller.TransitionState.TYPE.GOTO_BLUE_SPYMASTER : 
+            Controller.TransitionState.TYPE.GOTO_RED_SPYMASTER;
         
         this._controller.state = new Controller.TransitionState(goto);
     }
@@ -192,12 +192,16 @@ Controller.TransitionState = class extends Controller.State {
         switch(this._type) {
             case Controller.TransitionState.TYPE.GOTO_RED_SPYMASTER:
                 this._controller.state = new Controller.SpyMasterState(Controller.SpyMasterState.TYPE.RED);
-            case Controller.TransitionState.TYPE.GOTO_RED_GUESSER:
-                this._controller.state = new Controller.SpyMasterState(Controller.SpyMasterState.TYPE.BLUE);
+                break;
             case Controller.TransitionState.TYPE.GOTO_BLUE_SPYMASTER:
+                this._controller.state = new Controller.SpyMasterState(Controller.SpyMasterState.TYPE.BLUE);
+                break;
+            case Controller.TransitionState.TYPE.GOTO_RED_GUESSER:
                 this._controller.state = new Controller.GuesserState(Controller.GuesserState.TYPE.RED);
+                break;
             case Controller.TransitionState.TYPE.GOTO_BLUE_GUESSER:
                 this._controller.state = new Controller.GuesserState(Controller.GuesserState.TYPE.BLUE);
+                break;
         }
         
     }

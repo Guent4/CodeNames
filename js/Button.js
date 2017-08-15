@@ -7,6 +7,7 @@ class Button {
         this._color = color;
         this._radius = radius;
         this._enabled = true;
+        this._callback = undefined;
     }
 
     get topLeftCoord() {

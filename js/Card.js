@@ -52,12 +52,6 @@ class Card {
         this._enabled = !spymaster;
     }
     
-    _callback() {
-        this._revealed = true;
-        
-        // TODO: Handle the results of guessing this card
-    }
-    
     draw() {
         if (this._revealed) {
             // Fill and border show true colors
@@ -93,6 +87,21 @@ class Card {
         // If the button is enabled, then register this
         if (this._enabled) Events.on(InputHandler.EVENTS.CLICK, this._click, this);
     }
+
+    _click(mousePosition) {
+        const distance = Coordinate.sub(mousePosition, this._topLeftCoord);
+        if (distance.x > 0 && distance.x < this._size.width &&
+            distance.y > 0 && distance.y < this._size.height) {
+            this._callback();
+        }
+    }
+
+    _callback() {
+        this._revealed = true;
+        
+        // TODO: Handle the results of guessing this card
+    }
+
 }
 
 Card.TYPE = {

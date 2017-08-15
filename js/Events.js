@@ -46,15 +46,18 @@ class Events {
 	}
 
 	static dispatch(eventType, ...data) {
+        if (eventType !== "drawtimer-draw") {
+            console.log(eventType)
+        }
 		if (eventType in Events.events) {
             for (let [handler, owner] of Events.events[eventType]) {
-			    handler.call(owner, ...data);
+                if (handler) handler.call(owner, ...data);
             }
 		}
 
         if (eventType in Events.eventsReset) {
             for (let [handler, owner] of Events.eventsReset[eventType]) {
-                handler.call(owner, ...data);
+                if (handler) handler.call(owner, ...data);
             }
         }
 	}
