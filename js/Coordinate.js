@@ -24,7 +24,11 @@ class Coordinate {
         return [this._x, this._y];
     }
 
-    static subtract(coord1, coord2) {
+    static add(coord1, coord2) {
+        return new Coordinate(coord1.x + coord2.x, coord1.y + coord2.y);
+    }
+
+    static sub(coord1, coord2) {
         return new Coordinate(coord1.x - coord2.x, coord1.y - coord2.y);
     }
 }

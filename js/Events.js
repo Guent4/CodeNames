@@ -4,13 +4,13 @@ class Events {
             if (eventType in Events.eventsReset) {
                 Events.eventsReset[eventType].push([handler, owner]);
             } else {
-                Events.eventsReset[eventType] = [[handler, owner]]
+                Events.eventsReset[eventType] = [[handler, owner]];
             }
         } else {
             if (eventType in Events.events) {
                 Events.events[eventType].push([handler, owner]);
             } else {
-                Events.events[eventType] = [[handler, owner]]
+                Events.events[eventType] = [[handler, owner]];
             }
         }
 	}
@@ -60,7 +60,7 @@ class Events {
 	}
 
 	static clearReset() {
-	    Events.eventsReset = {}
+	    Events.eventsReset = {};
     }
 }
 

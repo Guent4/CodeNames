@@ -1,6 +1,6 @@
 class DrawTimer {
     constructor(canvas, fps) {
-        this._cavnas = canvas;
+        this._canvas = canvas;
         this._fps = fps;
         this._interval = 1000 / this._fps;
 
@@ -22,7 +22,7 @@ class DrawTimer {
     }
 
     _draw() {
-        this._cavnas.clear();
+        this._canvas.clear();
         Events.clearReset();
 
         Events.dispatch(DrawTimer.EVENTS.DRAW);

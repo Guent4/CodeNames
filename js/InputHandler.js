@@ -2,7 +2,7 @@ class InputHandler {
     constructor(canvas) {
         this._canvas = canvas;
 
-        this._canvas.listen("click", this._click.bind(this))
+        this._canvas.listen("click", this._click.bind(this));
     }
 
     _click(e) {
