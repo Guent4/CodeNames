@@ -9,6 +9,7 @@ class Board {
         this._ncols = 5;
         this._nreds = 9;
         this._nblues = 8;
+        this._nassassins = 1;
 
         // State: empty, spymaster, guesser
         this._state = Board.STATES.EMPTY;
@@ -60,6 +61,45 @@ class Board {
         for (let card of this._cards) {
             card.spymaster = this._isSpymaster;
         }
+    }
+
+    enableCards(enable) {
+        for (let card of this._cards) {
+            card.enabled = enable;
+        }
+    }
+
+    blueWin() {
+        let blue_cards = 0;
+        for (let card of this._cards) {
+            if (card.revealed && card.type === Card.TYPE.BLUE) {
+                blue_cards++;
+            }
+        }
+
+        return blue_cards === this._nblues;
+    }
+
+    redWin() {
+        let red_cards = 0;
+        for (let card of this._cards) {
+            if (card.revealed && card.type === Card.TYPE.RED) {
+                red_cards++;
+            }
+        }
+
+        return red_cards === this._nreds;
+    }
+
+    assassinWin() {
+        let assassin_cards = 0;
+        for (let card of this._cards) {
+            if (card.revealed && card.type === Card.TYPE.ASSASSIN) {
+                assassin_cards++;
+            }
+        }
+
+        return assassin_cards === this._nassassins;
     }
 
     enableDraw() {

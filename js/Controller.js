@@ -134,6 +134,7 @@ Controller.GuesserState = class extends Controller.State {
         this._type = type;
         
         Events.on(Controller.GuesserState.EVENTS.GOTO_TRANSITION, this._gotoTransition, this, false);
+        Events.on(Controller.GuesserState.EVENTS.GOTO_WIN, this._gotoWin, this, false);
     }
 
     start() {
@@ -156,10 +157,16 @@ Controller.GuesserState = class extends Controller.State {
         
         this._controller.state = new Controller.TransitionState(goto);
     }
+
+    _gotoWin(type) {
+        // Type in this case is either Win.TYPE.RED_WIN or Win.TYPE.BLUE_WIN
+        this._controller.state = new Controller.WinState(type);
+    }
 };
 
 Controller.GuesserState.EVENTS = {
-    GOTO_TRANSITION: "guesserstate-goto_transition"
+    GOTO_TRANSITION: "guesserstate-goto_transition",
+    GOTO_WIN: "guesserstate-goto_win"
 };
 
 Controller.GuesserState.TYPE = {
@@ -216,4 +223,38 @@ Controller.TransitionState.TYPE = {
     GOTO_BLUE_SPYMASTER: 1,
     GOTO_RED_GUESSER: 2,
     GOTO_BLUE_GUESSER: 3
+};
+
+Controller.WinState = class extends Controller.State {
+    constructor(type) {
+        super(Controller.STATES.TRANSITION);
+        this._type = type;
+
+        Events.on(Controller.WinState.EVENTS.LEAVE_WIN, this._leaveWin, this, false);
+    }
+
+    start() {
+        console.log("Starting Win State");
+        this._transition = new Win(canvas, this._type);
+    }
+
+    finish() {
+        console.log("Finishing Win State");
+        this._transition.remove();
+
+        Events.off(Controller.WinState.EVENTS.LEAVE_WIN, this);
+    }
+
+    _leaveWin() {
+
+    }
+};
+
+Controller.WinState.EVENTS = {
+    LEAVE_WIN: "winstate-leave_win"
+};
+
+Controller.WinState.TYPE = {
+    WIN_RED: 0,
+    WIN_BLUE: 1
 };
